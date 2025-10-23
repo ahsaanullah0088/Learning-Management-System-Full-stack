@@ -7,3 +7,7 @@ class ErrorHandler extends Error {
   }
 }
 export default  ErrorHandler
+
+//constructor means its get values 
+// super means it will call parent class Error
+// captureStackTrace is used to create a .stack property on the error instance
