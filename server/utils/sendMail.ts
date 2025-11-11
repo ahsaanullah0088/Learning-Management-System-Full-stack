@@ -1,3 +1,4 @@
+require('dotenv').config();
 import nodemailer,{Transporter}  from "nodemailer";
 import ejs from 'ejs';
 import path from "path"
@@ -30,6 +31,6 @@ const mailOptions={
     subject,
     html
 }
-   await transporter.sendMail(mailOptions);
+   await Transporter.sendMail(mailOptions);
 }
 export default sendMail;
