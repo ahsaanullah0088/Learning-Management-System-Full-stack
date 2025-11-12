@@ -20,17 +20,23 @@ const Transporter:Transporter=nodemailer.createTransport({
     }
 })
 
-const {email,subject,template,data}= options;
-//get the path to  the email template file
-const templatePath=path.join(__dirname,'../mails',template);
-//render the email template using EJS
-const html:string=await ejs.renderFile(templatePath,data);
-const mailOptions={
-    from :process.env.SMTP_MAIL,
-    to:email,
-    subject,
-    html
-}
-   await Transporter.sendMail(mailOptions);
-}
+// Extract values from options
+  const { email, subject, template, data } = options;
+
+  // Create the full path to the EJS template file
+  const templatePath = path.join(__dirname, '../mails', template);
+
+  // Render the EJS template to HTML by injecting data into it
+  const html: string = await ejs.renderFile(templatePath, data);
+
+  // Setup the email content
+  const mailOptions = {
+    from: process.env.SMTP_MAIL, // sender email
+    to: email,                   // Recipient
+    subject,                     // Subject line
+    html                         // The actual HTML email content
+  };
+  // Send the email using the transporter
+  await Transporter.sendMail(mailOptions);
+};
 export default sendMail;
