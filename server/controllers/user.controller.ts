@@ -143,7 +143,21 @@ export const loginUser = catchAsyncErrors(
       if (!isPasswordMatch) {
         return next(new ErrorHandler("Invalid email or password", 401));
       }
-      sendToken(user,200,res);
+      sendToken(user, 200, res);
+    } catch (error:any) {
+      next(new ErrorHandler(error.message, 400));
+    }
+  }
+);
+export const LogoutUser = catchAsyncErrors(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      res.cookie("access_token", "",{maxAge:1});
+      res.cookie("refresh_token","", {maxAge:1});
+      res.status(200).json({
+        success:true,
+        message:"User Logout Successfully!"
+      })
     } catch (error:any) {
       next(new ErrorHandler(error.message, 400));
     }
