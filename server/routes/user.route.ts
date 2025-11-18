@@ -1,8 +1,10 @@
 import express from "express";
-import { registerationUser , activateUser, loginUser, LogoutUser } from "../controllers/user.controller";
+import { registerationUser , activateUser, loginUser, LogoutUser, updateAccessToken } from "../controllers/user.controller";
+import { authorizeRoles, isAuthenticated } from "../middleware/auth";
 const UserRouter = express.Router();
 UserRouter.post("/registration", registerationUser);
 UserRouter.post("/activate-user" , activateUser );
 UserRouter.post("/login", loginUser);
-UserRouter.get('/logout',LogoutUser)
+UserRouter.get("/logout", isAuthenticated, LogoutUser);
+UserRouter.get("/refresh-token", updateAccessToken);
 export default UserRouter;
