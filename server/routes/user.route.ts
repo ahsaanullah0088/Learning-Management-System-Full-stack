@@ -1,5 +1,5 @@
 import express from "express";
-import { registerationUser , activateUser, loginUser, LogoutUser, updateAccessToken } from "../controllers/user.controller";
+import { registerationUser , activateUser, loginUser, LogoutUser, updateAccessToken, getUserInfo, } from "../controllers/user.controller";
 import { authorizeRoles, isAuthenticated } from "../middleware/auth";
 const UserRouter = express.Router();
 UserRouter.post("/registration", registerationUser);
@@ -7,4 +7,5 @@ UserRouter.post("/activate-user" , activateUser );
 UserRouter.post("/login", loginUser);
 UserRouter.get("/logout", isAuthenticated, LogoutUser);
 UserRouter.get("/refresh-token", updateAccessToken);
+UserRouter.get("/me", isAuthenticated, getUserInfo);
 export default UserRouter;

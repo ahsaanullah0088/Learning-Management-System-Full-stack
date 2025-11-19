@@ -9,6 +9,7 @@ import path from "path";
 import sendMail from "../utils/sendMail";
 import { accessTokenOptions, sendToken } from "../utils/jwt";
 import {redis} from "../utils/redis"
+import { getUserById } from "../services/user.service";
 //register
 interface IRegistrationBody {
   name: string;
@@ -205,4 +206,15 @@ const user = JSON.parse(session);
     }
   }
 );
+//get user information 
 
+export const getUserInfo=catchAsyncErrors(async(req:Request,res:Response,next:NextFunction)=>{
+try {
+  const userId = req.user?._id || "";
+  getUserById(userId, res);
+  
+} catch (error:any) {
+      return next(new ErrorHandler(error.message, 400));
+    }
+
+})
